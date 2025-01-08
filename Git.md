@@ -2,17 +2,11 @@
 
 ![](https://www.runoob.com/wp-content/uploads/2015/02/git-process.png)
 
-
-
 # 2 Git 工作区、暂存区、本地仓库、远程仓库关系
 
 ![](https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg)
 
-
-
 <img src="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" title="" alt="" width="655">
-
-
 
 **说明：**
 
@@ -20,8 +14,6 @@
 - staging area：暂存区/缓存区
 - local repository：版本库或本地仓库
 - remote repository：远程仓库
-
-
 
 # 3 Git基本操作
 
@@ -115,8 +107,6 @@
 
 # 5 远程仓库  (Github)
 
-
-
 <img title="" src="https://www.runoob.com/wp-content/uploads/2015/03/Git-push-command.jpeg" alt="" width="635">
 
 ## 5.1 前期准备
@@ -125,13 +115,13 @@
   
       由于你的本地 Git 仓库和 GitHub 仓库之间的传输是通过SSH加密的，所以我们需要配置验证信息，使用以下命令生成 SSH Key：
   
-  ``` 
+  ```shell
   ssh-keygen -t rsa -C "youremail@example.com"
   ```
   
       后面的 **your_email@youremail.com** 改为你在 Github 上注册的邮箱，之后会要求确认路径和输入密码，我们这使用默认的一路回车就行。
   
-      成功的话会在 **~/** 下生成 **.ssh** 文件夹，进去，打开 **<mark>id_rsa.pub</mark>**，复制里面的 **key**。
+      成功的话会在 **~/** 下生成 **.ssh** 文件夹，进去，打开 `id_rsa.pub`，复制里面的 **key**。
 
 + **github配置** 
   
@@ -143,7 +133,7 @@
 
 ## 5.2 添加远程库 （本地标识）
 
-```
+```shell
 git remote add [shortname] [url]
 ```
 
@@ -155,7 +145,7 @@ git remote add [shortname] [url]
 
 查看当前配置有哪些远程仓库，执行时加上 -v 参数，可以看到每个别名的实际链接地址。
 
-```
+```shell
 $ git remote
 origin
 $ git remote -v
@@ -167,7 +157,7 @@ origin    git@github.com:wsunswimfish/biji.git (push)
 
 将本地仓库信息推送到远程仓库
 
-```
+```shell
 git push -u biji master
 ```
 
@@ -175,19 +165,19 @@ git push -u biji master
 
 + 从远程仓库下载新分支与数据
   
-  ```
+  ```shell
   git fetch
   ```
 
 + 从远端仓库提取数据并尝试合并到当前分支
   
-  ```
+  ```shell
   git merge
   ```
 
 ## 5.6 删除远程仓库（本地标识）
 
-```
+```shell
 git remote rm [别名]
 ```
 
@@ -195,7 +185,7 @@ git remote rm [别名]
 
 ssh 访问 gitHub 出错如下：
 
-```
+```shell
 $ ssh -T git@github.com
 The authenticity of host 'github.com (140.82.118.4)' can't be established.
 RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
@@ -205,14 +195,10 @@ Host key verification failed.
 
 解决办法：（将GitHub添加到信任主机列表后，可以成功访问）
 
-```
+```shell
 $ ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 $ ssh -T git@github.com
 Warning: Permanently added the RSA host key for IP address '140.82.118.4' to the list of known hosts.
 Hi earthnorth! You've successfully authenticated, but GitHub does not provide shell access.
 ```
-
-
-
-

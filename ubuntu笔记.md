@@ -28,7 +28,7 @@
 
     将下载的主题解压到 `/usr/share/plymouth/themes/` 目录中。
 
-```
+```shell
 sudo tar -xvf your_theme.tar.gz -C /usr/share/plymouth/themes/
 ```
 
@@ -38,7 +38,7 @@ sudo tar -xvf your_theme.tar.gz -C /usr/share/plymouth/themes/
 
     使用以下命令查看系统中已安装的Plymouth主题：
 
-```
+```shell
 sudo update-alternatives --display default.plymouth
 ```
 
@@ -48,19 +48,19 @@ sudo update-alternatives --display default.plymouth
 
 + **更新替换项**：注册新的主题到 `update-alternatives` 系统。
   
-  ```
+  ```shell
   sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/your_theme/your_theme.plymouth 100
   ```
 
 + **选择默认主题**：设置默认的Plymouth主题。
   
-  ```
+  ```shell
   sudo update-alternatives --config default.plymouth
   ```
 
     你会看到类似如下的输出，选择你想使用的主题：
 
-```
+```shell
 There are 3 choices for the alternative default.plymouth (providing /usr/share/plymouth/themes/default.plymouth).
 
 Selection    Path                                                           Priority   Status
@@ -76,7 +76,7 @@ Selection    Path                                                           Prio
 
     执行以下命令来更新Plymouth配置：
 
-```
+```shell
 sudo update-initramfs -u
 ```
 
@@ -84,7 +84,7 @@ sudo update-initramfs -u
 
     最后，重启系统以查看效果：
 
-```
+```shell
 sudo reboot
 ```
 
@@ -106,7 +106,7 @@ sudo reboot
 
     编辑主题的主配置文件，例如 `/usr/share/plymouth/themes/your_theme/your_theme.plymouth`：
 
-```
+```shell
 sudo nano /usr/share/plymouth/themes/your_theme/your_theme.plymouth
 ```
 
@@ -114,7 +114,7 @@ sudo nano /usr/share/plymouth/themes/your_theme/your_theme.plymouth
 
     配置文件的内容类似如下：
 
-```
+```shell
 [Plymouth Theme]
 Name=Your Theme
 Description=Custom Plymouth Theme
@@ -133,7 +133,7 @@ ScriptFile=/usr/share/plymouth/themes/your_theme/your_theme.script
 
     编辑主题的脚本文件，例如 `/usr/share/plymouth/themes/your_theme/your_theme.script`：
 
-```
+```shell
 sudo nano /usr/share/plymouth/themes/your_theme/your_theme.script
 ```
 
@@ -141,7 +141,7 @@ sudo nano /usr/share/plymouth/themes/your_theme/your_theme.script
 
     你可以在脚本文件中定义动画效果和图形元素。示例脚本可能如下：
 
-```
+```shell
 // Load and show image
 Image img = Image("background.png");
 img.SetPosition(PLYMOUTH_CENTER_ON_PARENT, PLYMOUTH_CENTER_ON_PARENT);
@@ -168,11 +168,7 @@ progress_bar.SetBackgroundColor(0.0, 0.0, 0.0);
 
     如果主题配置文件有错误，系统可能会回退到默认主题。检查配置文件的语法和路径是否正确。
 
-
-
 --- 
-
-
 
 # ubuntu 向应用和DOCK中添加图标
 
@@ -184,7 +180,7 @@ progress_bar.SetBackgroundColor(0.0, 0.0, 0.0);
 
     在/usr/bin下创建应用执行文件的软链接
 
-```
+```shell
 ln -s 原文件 链接文件
 ```
 
@@ -192,7 +188,7 @@ ln -s 原文件 链接文件
 
     为保证应用能在“显示应用”中找到，并且后期能添加到DOCK，需要在/usr/share/applications下添加.desktop配置文件
 
-``` 
+```shell
 [Desktop Entry]
 Version=1.0
 Name=世界那么大，我要去溜达...
@@ -212,6 +208,36 @@ X-Ubuntu-Gettext-Domain=Q
 
     注销重新登录生效。
 
-
-
 --- 
+
+# Ubuntu 配置 sudo 时不需要输入密码
+
+> 此方法在 Ubuntu 24.04 中测试通过，其他 Linux 版本仅供参考。
+
+    sudo 相关的配置位于 `/etc/sudoers` 文件内。但这个文件不建议直接编辑，而是使用以下命令：
+
+```shell
+sudo visudo
+```
+
+该命令会打开默认的编辑器编辑 `/etc/sudoers` 文件，并在保存时自动检查文件格式并设置到正确的文件权限。
+
+进入编辑状态后，在文件最后面（划重点：一定是在文件最后面）添加以下内容：
+
+```shell
+swimfish ALL=(ALL) NOPASSWD: ALL
+```
+
+    解释一下：`swimfish` 是我的登录用户名，根据需要改成自己的用户名即可。`NOPASSWD` 表示不需要输入密码，后面的 ALL 表示所有命令。
+
+    也就是说，`swimfish` 用户在执行 `所有的` sudo 命令时均不需要输入密码。如果要设置指定命令无需输入密码，只需要把最后面的 `ALL` 替换为具体命令即可。
+
+    如果要针对用户组设置规则，只需在组名前添加 `%` 即可，如（swimfish 为用户组的名字）：
+
+```shell
+%swimfish ALL=(ALL) NOPASSWD: ALL
+```
+
+> 重点：之前查了很多文档各种尝试均未生效，最后得知自己添加的内容 **一定** 要放到**文件最后**，否则是不生效的。
+
+> Tips: `/etc/sudoers` 文件最后面有一行 `#includedir /etc/sudoers.d`，也可以把注释取消掉，并把自己的规则写到 `/etc/sudoers.d` 目录中，文件名任意。
