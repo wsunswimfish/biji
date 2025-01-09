@@ -155,7 +155,7 @@ progress_bar.SetSize(GetX(resolved->terminal_mode), 20);
 progress_bar.SetBackgroundColor(0.0, 0.0, 0.0);
 ```
 
-## 3. 解决常见问题
+## 3 解决常见问题
 
 ### 3.1 无法显示新主题
 
@@ -167,6 +167,40 @@ progress_bar.SetBackgroundColor(0.0, 0.0, 0.0);
 ### 3.2 主题配置出错
 
     如果主题配置文件有错误，系统可能会回退到默认主题。检查配置文件的语法和路径是否正确。
+
+## 4 参考执行脚本
+
++ 编辑好新的logo文件
+
++ 执行chlog脚本
+  
+  ```shell
+  % vim chlog
+  
+  #!/bin/zsh
+  
+  echo " ===================================="
+  echo "| 本脚本执行系统启动、关机logo的修改 |"
+  echo " ====================================\n"
+  
+  if (( $# != 1 ))  {
+  	echo '未指定正确的logo文件！'
+  } elif { sudo cp $1 /usr/share/plymouth/ubuntu-logo.png && sudo cp $1 /usr/share/plymouth/themes/spinner/watermark.png && sudo update-initramfs -u } { 
+  	echo '\nLogo修改完成，重启生效。'
+  
+  } else {
+  	echo '\n脚本未正确执行，请检查' } 
+  
+  
+  % ./chlogo tt2.png
+  本脚本执行系统启动、关机logo的修改
+  
+  update-initramfs: Generating /boot/initrd.img-6.8.0-51-generic
+  I: The initramfs will attempt to resume from /dev/nvme0n1p3
+  I: (UUID=ba5d0c66-6c23-481c-a73f-435e6a902010)
+  I: Set the RESUME variable to override this.
+  Logo修改完成，重启生效。
+  ```
 
 --- 
 
