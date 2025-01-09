@@ -285,6 +285,9 @@ IP4.DNS[1]:                             8.8.8.8
 # type              连接类型
 # autoconnect 是否自动连接
 # ifname          连接到的设备名称
+
+
+% nmcli con add type wifi ssid YDBG con-name tt ifname wlp0s20f3 ip4 192.168.104.6/22 gw4 192.168.104.1  
 ```
 
 更多的类型或方法可以使用`nmcli connection add help`查看。
