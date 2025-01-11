@@ -190,32 +190,61 @@ progress_bar.SetBackgroundColor(0.0, 0.0, 0.0);
   
   } else {
       echo '\n脚本未正确执行，请检查' } 
-  ```
-
+  
+  
+  # or 
+  
+  #!/bin/zsh
+  
+  echo " ===================================="
+  echo "| 本脚本执行系统启动、关机logo的修改 |"
+  echo " ====================================\n"
+  
+  
+  logo_path=/usr/share/plymouth
+  
+  case $# {
+  	(0)
+  		echo "\n请明确新logo文件的名称。"
+  		;;
+  	(1)
+  		if {sudo cp $1 $logo_path/ubuntu-logo.png && sudo cp $1 $logo_path/themes/spinner/watermark.png && sudo update-initramfs -u } {
+  			echo "\nUbuntu 开关机 Logo 修改完成，重启生效。" 
+  		} else {
+  			echo "\n脚本执行有误，请检查。"
+  		}
+  		;;
+  	(*)
+  		echo "\n未知错，请检查。"
+  		;;
+  }
+  
   % ./chlogo tt2.png
   本脚本执行系统启动、关机logo的修改
-
+  
   update-initramfs: Generating /boot/initrd.img-6.8.0-51-generic
   I: The initramfs will attempt to resume from /dev/nvme0n1p3
   I: (UUID=ba5d0c66-6c23-481c-a73f-435e6a902010)
   I: Set the RESUME variable to override this.
   Logo修改完成，重启生效。
+  ```
+  
+  
 
-```shell
---- 
+---
 
 # ubuntu 向应用和DOCK中添加图标
 
 ## 1 安装位置
 
-  一般在/opt/下
+一般在/opt/下
 
 ## 2 执行链接
 
-  在/usr/bin下创建应用执行文件的软链接
+在/usr/bin下创建应用执行文件的软链接
 
 ```shell
-ln -s 原文件 链接文件
+
 ```
 
 ## 3 修改配置文件
