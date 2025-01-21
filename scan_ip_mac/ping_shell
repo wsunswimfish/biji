@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+ip_network=(192.168.104 192.168.105 192.168.106 192.168.107 192.168.116 192.168.117 192.168.118 192.168.119)
+ip_date=`date +%Y%m%d%H%M`
+
+for i ($ip_network) {
+
+	for ii ({1..254}) {
+		(ping -c 2 -w 2 -D  $i.$ii > /dev/null && echo $i.$ii"\t"ok || echo $i.$ii"\t"no ) | tee -a ping_$ip_date.txt
+	}
+	
+#	echo $i"\t"`grep -E "$i.*ok"  ping_$ip_date.txt  | wc -l ` | tee -a ping_$ip_date-t.txt
+	
+}
+
+echo "\n================SUM================"
+
+for i ($ip_network) {
+	echo $ip_date[1,8]"\t"$i"\t"`grep -E "$i.*ok"  ping_$ip_date.txt  | wc -l ` | tee -a ping_sum.txt
+	
+}
+
+echo "===================================="
