@@ -1,3 +1,10 @@
+# 发现网络中存活的IP和MAC的对应关系
+# 以核心交换机为起点，扫描网络中存活的IP和MAC的对应关系
+# 先对IP地址进行ping，以便获取ARP表
+# 然后对ARP表进行解析，获取IP和MAC的对应关系
+# 最后将结果保存到CSV文件中
+
+
 from netmiko import ConnectHandler
 import time
 import ipaddress
