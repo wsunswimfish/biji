@@ -374,6 +374,4 @@ aa && { bb || { cc && dd } }
 
     本篇简单介绍了变量和语句的使用方法。变量部分只涉及了最基础常用的部分，后续文章会详细介绍。语句部分已经覆盖了所有需要使用的语句，实际上这些语句都不只有这一种语法，但本系列文章统一使用这个语法。但涉及到的几种括号的用法比较复杂，之后的文章也会详细介绍。
 
-
-
     本文不再更新，全系列文章在此更新维护：[github.com/goreliu/zshguide](https://link.zhihu.com/?target=https%3A//github.com/goreliu/zshguide)
